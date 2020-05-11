@@ -8,11 +8,11 @@ function printLineChart(target, labels, data) {
         datasets: [{
             label: 'Vendite',
             data: data,
-            backgroundColor: 'green',
-            borderColor: 'red',
+            backgroundColor: '#ffe277',
+            borderColor: '#58b4ae',
             borderWidth: 3,
-            pointBackgroundColor: 'green',
-            pointBorderColor: 'red',
+            pointBackgroundColor: '#ffb367',
+            pointBorderColor: '#58b4ae',
             pointBorderWidth: 2,
             pointRadius: 4
         }]
