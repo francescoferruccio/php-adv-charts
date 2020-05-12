@@ -29,9 +29,23 @@ function printLineChart(target, labels, data) {
   });
 }
 
-$(document).ready(function() {
+function getMonths() {
+  moment.locale('it');
+  var mesi = moment.months();
+  var mesiUpperCase = [];
+
+  for (var index in mesi) {
+    var mese = mesi[index];
+    mese = mese.charAt(0).toUpperCase() + mese.slice(1);
+    mesiUpperCase.push(mese);
+  }
+
+  return mesiUpperCase;
+}
+
+function init() {
+  var mesi = getMonths();
   var lineCanvas = $('#lineChart');
-  var mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 
   $.ajax({
     url: 'server.php',
@@ -43,5 +57,6 @@ $(document).ready(function() {
       console.error("ERRORE", err);
     }
   });
+}
 
-});
+$(document).ready(init);
