@@ -39,47 +39,49 @@ function init() {
   var lineCanvas = $('#lineChart');
   var pieCanvas = $('#pieChart');
   var teamCanvas = $('#teamChart');
+  var query = location.search;
+
+  // console.log(query);
 
   // chiamata ajax primo grafico
   $.ajax({
-    url: 'getFatturato.php',
+    url: 'getFatturato.php' + query,
     method: 'GET',
     success: function(data) {
-      console.log(data);
       data.labels = mesi;
       // data.risultati[0].backgroundColor = 'blue';
       printChart(lineCanvas, data);
     },
     error: function(err, data, stato) {
-      console.error("ERRORE", err, data, stato);
+      console.error("ERRORE", err.status);
     }
   });
 
-  // // chiamata ajax secondo grafico
-  // $.ajax({
-  //   url: 'getFatturatoByAgent.php',
-  //   method: 'GET',
-  //   success: function(data) {
-  //     printChart(pieCanvas, data);
-  //   },
-  //   error: function(err) {
-  //     console.error("ERRORE", err.status);
-  //   }
-  // });
-  //
-  //   // chiamata ajax terzo grafico
-  // $.ajax({
-  //   url: 'getTeamEfficiency.php',
-  //   method: 'GET',
-  //   success: function(data) {
-  //     data.labels = mesi;
-  //
-  //     printChart(teamCanvas, data);
-  //   },
-  //   error: function(err) {
-  //     console.error("ERRORE", err.status);
-  //   }
-  // });
+  // chiamata ajax secondo grafico
+  $.ajax({
+    url: 'getFatturatoByAgent.php' + query,
+    method: 'GET',
+    success: function(data) {
+      printChart(pieCanvas, data);
+    },
+    error: function(err) {
+      console.error("ERRORE", err.status);
+    }
+  });
+
+    // chiamata ajax terzo grafico
+  $.ajax({
+    url: 'getTeamEfficiency.php' + query,
+    method: 'GET',
+    success: function(data) {
+      data.labels = mesi;
+
+      printChart(teamCanvas, data);
+    },
+    error: function(err) {
+      console.error("ERRORE", err.status);
+    }
+  });
 
 }
 

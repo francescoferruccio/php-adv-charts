@@ -5,9 +5,7 @@
 
   $userLevel = $_GET['level'];
 
-  // var_dump($userLevel);
-
-  if($userLevel == 'guest') {
+  if($userLevel == 'guest' || $userLevel == 'employee' || $userLevel == 'clevel') {
 
     $res['type'] = $graphs['fatturato']['type'];
 
@@ -24,7 +22,5 @@
       ];
 
     echo json_encode($res);
-  } else {
-    echo json_encode('NON AUTORIZZATO');
   }
 ?>
