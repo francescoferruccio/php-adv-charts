@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Chart JS - Step 1</title>
+    <title>Chart JS - Step 2</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2/dist/Chart.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
