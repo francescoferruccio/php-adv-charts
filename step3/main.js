@@ -12,8 +12,9 @@ function printChart(target, data) {
             yAxes: [{
                 ticks: {
                     beginAtZero: true
-                }
-            }]
+                },
+                display: data.displayY
+            }],
         }
     }
   });
@@ -49,7 +50,13 @@ function init() {
     method: 'GET',
     success: function(data) {
       data.labels = mesi;
-      // data.risultati[0].backgroundColor = 'blue';
+      // modifico la grafica
+      data.risultati[0].backgroundColor = '#ffe277';
+      data.risultati[0].borderColor = '#58b4ae';
+      data.risultati[0].pointBackgroundColor = '#ffb367';
+      data.risultati[0].pointBorderColor = '#58b4ae';
+      data.displayY = true;
+
       printChart(lineCanvas, data);
     },
     error: function(err, data, stato) {
@@ -62,6 +69,10 @@ function init() {
     url: 'getFatturatoByAgent.php' + query,
     method: 'GET',
     success: function(data) {
+      // modifico la grafica
+      data.risultati[0].backgroundColor = '#ff5200';
+      data.risultati[0].borderColor = '#00263b';
+
       printChart(pieCanvas, data);
     },
     error: function(err) {
@@ -75,6 +86,22 @@ function init() {
     method: 'GET',
     success: function(data) {
       data.labels = mesi;
+
+      data.displayY = true;
+      // modifico la grafica Team1
+      data.risultati[0].borderColor = '#c70039';
+      data.risultati[0].pointBackgroundColor = '#fff';
+      data.risultati[0].pointBorderColor = '#c70039';
+
+      // modifico la grafica Team2
+      data.risultati[1].borderColor = '#035aa6';
+      data.risultati[1].pointBackgroundColor = '#fff';
+      data.risultati[1].pointBorderColor = '#035aa6';
+
+      // modifico la grafica Team3
+      data.risultati[2].borderColor = '#fcbf1e';
+      data.risultati[2].pointBackgroundColor = '#fff';
+      data.risultati[2].pointBorderColor = '#fcbf1e';
 
       printChart(teamCanvas, data);
     },
