@@ -5,17 +5,7 @@ function printChart(target, data) {
     type: data.type,
     data: {
         labels: data.labels,
-        datasets: [{
-            label: 'Vendite',
-            data: data.data,
-            backgroundColor: data.bgColor,
-            borderColor: data.borderColor,
-            borderWidth: 3,
-            pointBackgroundColor: data.pointBgColor,
-            pointBorderColor: data.pointBorderColor,
-            pointBorderWidth: 2,
-            pointRadius: 4
-        }]
+        datasets: data.risultati
     },
     options: {
         scales: {
@@ -25,26 +15,6 @@ function printChart(target, data) {
                 }
             }]
         }
-    }
-  });
-}
-
-function printTeam(target, labels, data) {
-  var ctx = target;
-  var myChart = new Chart(ctx, {
-    type: data.type,
-    data: {
-      labels: labels,
-      datasets: data.risultati
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-              beginAtZero: true
-          }
-        }]
-      }
     }
   });
 }
@@ -75,54 +45,41 @@ function init() {
     url: 'getFatturato.php',
     method: 'GET',
     success: function(data) {
-      var dati = {
-        type: data.type,
-        labels: mesi,
-        data: data.data,
-        bgColor: '#ffe277',
-        borderColor: '#58b4ae',
-        pointBgColor: '#ffb367',
-        pointBorderColor: '#58b4ae'
-      }
-      printChart(lineCanvas, dati);
+      console.log(data);
+      data.labels = mesi;
+      // data.risultati[0].backgroundColor = 'blue';
+      printChart(lineCanvas, data);
     },
-    error: function(err) {
-      console.error("ERRORE", err);
+    error: function(err, data, stato) {
+      console.error("ERRORE", err, data, stato);
     }
   });
 
-  // chiamata ajax secondo grafico
-  $.ajax({
-    url: 'getFatturatoByAgent.php',
-    method: 'GET',
-    success: function(data) {
-      var dati = {
-        type: data.type,
-        labels: data.nomi,
-        data: data.vendite,
-        bgColor: '#e43f5a',
-        borderColor: '#1b1b2f'
-      }
-
-      printChart(pieCanvas, dati);
-    },
-    error: function(err) {
-      console.error("ERRORE", err);
-    }
-  });
-
-
-  $.ajax({
-    url: 'getTeamEfficiency.php',
-    method: 'GET',
-    success: function(data) {
-
-      printTeam(teamCanvas, mesi, data);
-    },
-    error: function(err) {
-      console.error("ERRORE", err);
-    }
-  });
+  // // chiamata ajax secondo grafico
+  // $.ajax({
+  //   url: 'getFatturatoByAgent.php',
+  //   method: 'GET',
+  //   success: function(data) {
+  //     printChart(pieCanvas, data);
+  //   },
+  //   error: function(err) {
+  //     console.error("ERRORE", err.status);
+  //   }
+  // });
+  //
+  //   // chiamata ajax terzo grafico
+  // $.ajax({
+  //   url: 'getTeamEfficiency.php',
+  //   method: 'GET',
+  //   success: function(data) {
+  //     data.labels = mesi;
+  //
+  //     printChart(teamCanvas, data);
+  //   },
+  //   error: function(err) {
+  //     console.error("ERRORE", err.status);
+  //   }
+  // });
 
 }
 
