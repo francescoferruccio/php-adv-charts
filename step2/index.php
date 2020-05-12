@@ -14,6 +14,8 @@
     <div class="container">
       <!-- canvas chartjs -->
       <canvas id="lineChart"></canvas>
+      <!-- canvas chartjs -->
+      <canvas id="pieChart"></canvas>
     </div>
   </body>
 </html>
