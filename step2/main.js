@@ -8,11 +8,11 @@ function printChart(target, data) {
         datasets: [{
             label: 'Vendite',
             data: data.data,
-            backgroundColor: '#ffe277',
-            borderColor: '#58b4ae',
+            backgroundColor: data.bgColor,
+            borderColor: data.borderColor,
             borderWidth: 3,
-            pointBackgroundColor: '#ffb367',
-            pointBorderColor: '#58b4ae',
+            pointBackgroundColor: data.pointBgColor,
+            pointBorderColor: data.pointBorderColor,
             pointBorderWidth: 2,
             pointRadius: 4
         }]
@@ -29,6 +29,7 @@ function printChart(target, data) {
   });
 }
 
+// funzione che ricava i mesi dell'anno e mette la prima lettera maiuscola
 function getMonths() {
   moment.locale('it');
   var mesi = moment.months();
@@ -53,8 +54,16 @@ function init() {
     url: 'getFatturato.php',
     method: 'GET',
     success: function(data) {
-      data.labels = mesi;
-      printChart(lineCanvas, data);
+      var dati = {
+        type: data.type,
+        labels: mesi,
+        data: data.data,
+        bgColor: '#ffe277',
+        borderColor: '#58b4ae',
+        pointBgColor: '#ffb367',
+        pointBorderColor: '#58b4ae'
+      }
+      printChart(lineCanvas, dati);
     },
     error: function(err) {
       console.error("ERRORE", err);
@@ -66,7 +75,15 @@ function init() {
     url: 'getFatturatoByAgent.php',
     method: 'GET',
     success: function(data) {
-      printChart(pieCanvas, data);
+      var dati = {
+        type: data.type,
+        labels: data.nomi,
+        data: data.vendite,
+        bgColor: '#e43f5a',
+        borderColor: '#1b1b2f'
+      }
+
+      printChart(pieCanvas, dati);
     },
     error: function(err) {
       console.error("ERRORE", err);

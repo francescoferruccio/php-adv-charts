@@ -9,8 +9,8 @@
   $agenti = $graphs['fatturato_by_agent']['data'];
 
   foreach ($agenti as $nome => $vendite) {
-    $res['labels'][] = $nome;
-    $res['data'][] = $vendite;
+    $res['nomi'][] = $nome;
+    $res['vendite'][] = $vendite;
   }
 
   echo json_encode($res);
