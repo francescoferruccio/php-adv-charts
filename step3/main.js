@@ -1,23 +1,76 @@
-// funzione che stampa una Line Chart di chartjs
-function printChart(target, data) {
-  var ctx = target;
-  var myChart = new Chart(ctx, {
-    type: data.type,
-    data: {
+// funzione stampa fatturato
+function printFatturato(target, data) {
+  if(data) {
+    var ctx = target;
+    var myChart = new Chart(ctx, {
+      type: data.type,
+      data: {
         labels: data.labels,
-        datasets: data.risultati
-    },
-    options: {
+        datasets: [{
+          label: 'Vendite',
+          data: data.data,
+        }]
+      },
+      options: {
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                },
-                display: data.displayY
-            }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
-    }
-  });
+      }
+    });
+  }
+}
+
+// funzione stampa fatturato by agent
+function printFatturatoByAgent(target, data) {
+  if(data) {
+    var ctx = target;
+    var myChart = new Chart(ctx, {
+      type: data.type,
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: 'Vendite',
+          data: data.data,
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+}
+
+// funzione stampa grafico team efficiency
+function printTeamEfficiency(target, data) {
+  if(data) {
+    var ctx = target;
+    var myChart = new Chart(ctx, {
+      type: data.type,
+      data: {
+        labels: data.labels,
+        datasets: data.teams
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
 }
 
 // funzione che ricava i mesi dell'anno e mette la prima lettera maiuscola
@@ -40,72 +93,25 @@ function init() {
   var lineCanvas = $('#lineChart');
   var pieCanvas = $('#pieChart');
   var teamCanvas = $('#teamChart');
-  var query = location.search;
-
-  // console.log(query);
+  var level = location.search;
 
   // chiamata ajax primo grafico
   $.ajax({
-    url: 'getFatturato.php' + query,
+    url: 'server.php' + level,
     method: 'GET',
     success: function(data) {
-      data.labels = mesi;
-      // modifico la grafica
-      data.risultati[0].backgroundColor = '#ffe277';
-      data.risultati[0].borderColor = '#58b4ae';
-      data.risultati[0].pointBackgroundColor = '#ffb367';
-      data.risultati[0].pointBorderColor = '#58b4ae';
-      data.displayY = true;
+      if(data.fatturato) {
+        data.fatturato.labels = mesi;
+      }
+      if(data.teamEfficiency) {
+        data.teamEfficiency.labels = mesi;
+      }
 
-      printChart(lineCanvas, data);
+      printFatturato(lineCanvas, data.fatturato);
+      printFatturatoByAgent(pieCanvas, data.fatturatoByAgent);
+      printTeamEfficiency(teamCanvas, data.teamEfficiency);
     },
     error: function(err, data, stato) {
-      console.error("ERRORE", err.status);
-    }
-  });
-
-  // chiamata ajax secondo grafico
-  $.ajax({
-    url: 'getFatturatoByAgent.php' + query,
-    method: 'GET',
-    success: function(data) {
-      // modifico la grafica
-      data.risultati[0].backgroundColor = '#ff5200';
-      data.risultati[0].borderColor = '#00263b';
-
-      printChart(pieCanvas, data);
-    },
-    error: function(err) {
-      console.error("ERRORE", err.status);
-    }
-  });
-
-    // chiamata ajax terzo grafico
-  $.ajax({
-    url: 'getTeamEfficiency.php' + query,
-    method: 'GET',
-    success: function(data) {
-      data.labels = mesi;
-
-      data.displayY = true;
-      // modifico la grafica Team1
-      data.risultati[0].borderColor = '#c70039';
-      data.risultati[0].pointBackgroundColor = '#fff';
-      data.risultati[0].pointBorderColor = '#c70039';
-
-      // modifico la grafica Team2
-      data.risultati[1].borderColor = '#035aa6';
-      data.risultati[1].pointBackgroundColor = '#fff';
-      data.risultati[1].pointBorderColor = '#035aa6';
-
-      // modifico la grafica Team3
-      data.risultati[2].borderColor = '#fcbf1e';
-      data.risultati[2].pointBackgroundColor = '#fff';
-      data.risultati[2].pointBorderColor = '#fcbf1e';
-
-      printChart(teamCanvas, data);
-    },
-    error: function(err) {
       console.error("ERRORE", err.status);
     }
   });

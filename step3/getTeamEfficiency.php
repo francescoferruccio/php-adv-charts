@@ -1,30 +1,15 @@
 <?php
-  header('Content-Type: application/json');
-
   require_once "database.php";
 
-  $userLevel = $_GET['level'];
+  $tme['type'] = $graphs['team_efficiency']['type'];
 
-  if($userLevel == 'clevel') {
+  $team = $graphs['team_efficiency']['data'];
 
-    $res['type'] = $graphs['team_efficiency']['type'];
-
-    $team = $graphs['team_efficiency']['data'];
-
-    foreach ($team as $nome => $risultati) {
-      $res['risultati'][] = [
-        'label' => $nome,
-        'data' => $risultati,
-        'backgroundColor' => '',
-        'borderColor' => '',
-        'borderWidth' => 3,
-        'pointBackgroundColor' => '',
-        'pointBorderColor' => '',
-        'pointBorderWidth' => 2,
-        'pointRadius' => 4
-      ];
-    }
-    echo json_encode($res);
+  foreach ($team as $nome => $risultati) {
+    $tme['teams'][] = [
+      'label' => $nome,
+      'data' => $risultati,
+    ];
   }
 
 ?>
