@@ -125,7 +125,7 @@ function init() {
   var teamCanvas = $('#teamChart');
   var level = location.search;
 
-  // chiamata ajax primo grafico
+  // chiamata ajax unica
   $.ajax({
     url: 'server.php' + level,
     method: 'GET',
