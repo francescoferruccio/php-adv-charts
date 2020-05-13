@@ -9,6 +9,13 @@ function printFatturato(target, data) {
         datasets: [{
           label: 'Vendite',
           data: data.data,
+          backgroundColor: '#ffe277',
+          borderColor: '#58b4ae',
+          borderWidth: 3,
+          pointBackgroundColor: '#ffb367',
+          pointBorderColor: '#58b4ae',
+          pointBorderWidth: 2,
+          pointRadius: 4
         }]
       },
       options: {
@@ -35,6 +42,9 @@ function printFatturatoByAgent(target, data) {
         datasets: [{
           label: 'Vendite',
           data: data.data,
+          backgroundColor: '#ff5200',
+          borderColor: '#00263b',
+          borderWidth: 1,
         }]
       },
       options: {
@@ -42,7 +52,8 @@ function printFatturatoByAgent(target, data) {
           yAxes: [{
             ticks: {
               beginAtZero: true
-            }
+            },
+            display: false
           }]
         }
       }
@@ -53,6 +64,25 @@ function printFatturatoByAgent(target, data) {
 // funzione stampa grafico team efficiency
 function printTeamEfficiency(target, data) {
   if(data) {
+    // seleziono i 3 team
+    var team1 = data.teams[0];
+    var team2 = data.teams[1];
+    var team3 = data.teams[2];
+
+    // modifico i colori dei singoli team
+    team1.borderColor = '#c70039';
+    team1.pointRadius = 4;
+    team1.pointBorderWidth = 2;
+
+    team2.borderColor = '#035aa6';
+    team2.pointRadius = 4;
+    team2.pointBorderWidth = 2;
+
+    team3.borderColor = '#fcbf1e';
+    team3.pointRadius = 4;
+    team3.pointBorderWidth = 2;
+
+    // stampo dati
     var ctx = target;
     var myChart = new Chart(ctx, {
       type: data.type,
