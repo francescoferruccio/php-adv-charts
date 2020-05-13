@@ -37,6 +37,8 @@
 
   $level = $_GET['level'];
 
+  $res = [];
+
   if($level == 'guest') {
     $res['fatturato'] = getFatturato($graphs);
   } else if ($level == 'employee') {

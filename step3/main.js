@@ -28,6 +28,8 @@ function printFatturato(target, data) {
         }
       }
     });
+  } else {
+    $('.container').html('<h1>ACCESSO NON CONSENTITO!</h1>');
   }
 }
 
@@ -118,17 +120,28 @@ function getMonths() {
   return mesiUpperCase;
 }
 
+// funzione che ricava il livello utente dall'url
+function getLevel() {
+  var queryString = location.search;
+  var level = queryString.substring(7);
+
+  return level;
+}
+
 function init() {
   var mesi = getMonths();
   var lineCanvas = $('#lineChart');
   var pieCanvas = $('#pieChart');
   var teamCanvas = $('#teamChart');
-  var level = location.search;
+  var userLevel = getLevel();
 
   // chiamata ajax unica
   $.ajax({
-    url: 'server.php' + level,
+    url: 'server.php',
     method: 'GET',
+    data: {
+      level: userLevel
+    },
     success: function(data) {
       if(data.fatturato) {
         data.fatturato.labels = mesi;
