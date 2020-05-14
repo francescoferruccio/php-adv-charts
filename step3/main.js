@@ -12,7 +12,7 @@ function printFatturato(template, data) {
     var myChart = new Chart(ctx, {
       type: data.type,
       data: {
-        labels: data.labels,
+        labels: getMonths(),
         datasets: [{
           label: 'Vendite',
           data: data.data,
@@ -108,7 +108,7 @@ function printTeamEfficiency(template, data) {
     var myChart = new Chart(ctx, {
       type: data.type,
       data: {
-        labels: data.labels,
+        labels: getMonths(),
         datasets: data.teams
       },
       options: {
@@ -149,10 +149,6 @@ function getLevel() {
 }
 
 function init() {
-  var mesi = getMonths();
-  var lineCanvas = $('#lineChart');
-  var pieCanvas = $('#pieChart');
-  var teamCanvas = $('#teamChart');
   var userLevel = getLevel();
   // init handlebars
   var source = $("#canvas-template").html();
@@ -167,13 +163,6 @@ function init() {
       level: userLevel
     },
     success: function(data) {
-      if(data.fatturato) {
-        data.fatturato.labels = mesi;
-      }
-      if(data.teamEfficiency) {
-        data.teamEfficiency.labels = mesi;
-      }
-
       printFatturato(template, data.fatturato);
       printFatturatoByAgent(template, data.fatturatoByAgent);
       printTeamEfficiency(template, data.teamEfficiency);
