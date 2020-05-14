@@ -28,8 +28,6 @@ function printFatturato(target, data) {
         }
       }
     });
-  } else {
-    $('.container').html('<h1>ACCESSO NON CONSENTITO!</h1>');
   }
 }
 

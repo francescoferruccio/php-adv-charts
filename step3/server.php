@@ -35,18 +35,14 @@
     return $tme;
   }
 
-  $level = $_GET['level'];
+  $level = $_GET['level'] ?? 'guest';
 
-  $res = [];
+  $res['fatturato'] = getFatturato($graphs);
 
-  if($level == 'guest') {
-    $res['fatturato'] = getFatturato($graphs);
-  } else if ($level == 'employee') {
-    $res['fatturato'] = getFatturato($graphs);
+  if ($level == 'employee' || $level == 'clevel') {
     $res['fatturatoByAgent'] = getFatturatoByAgent($graphs);
-  } else if ($level == 'clevel') {
-    $res['fatturato'] = getFatturato($graphs);
-    $res['fatturatoByAgent'] = getFatturatoByAgent($graphs);
+  }
+  if ($level == 'clevel') {
     $res['teamEfficiency'] = getTeamEfficiency($graphs);
   }
 
