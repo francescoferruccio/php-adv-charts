@@ -3,10 +3,6 @@
 
   require_once "database.php";
 
-  function getFatturato($db) {
-    return $db['fatturato'];
-  }
-
   function getFatturatoByAgent($db) {
     $fba['type'] = $db['fatturato_by_agent']['type'];
 
@@ -37,7 +33,7 @@
 
   $level = $_GET['level'] ?? 'guest';
 
-  $res['fatturato'] = getFatturato($graphs);
+  $res['fatturato'] = $graphs['fatturato'];
 
   if ($level == 'employee' || $level == 'clevel') {
     $res['fatturatoByAgent'] = getFatturatoByAgent($graphs);
