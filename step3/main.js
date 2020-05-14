@@ -1,7 +1,14 @@
 // funzione stampa fatturato
-function printFatturato(target, data) {
+function printFatturato(template, data) {
   if(data) {
-    var ctx = target;
+    // handlebars context
+    var context = { chartType: "fatturato"};
+    var html = template(context);
+    // inserisco il template in pagina
+    $('.container').append(html);
+
+    // chartjs
+    var ctx = $('#fatturato');
     var myChart = new Chart(ctx, {
       type: data.type,
       data: {
@@ -32,9 +39,16 @@ function printFatturato(target, data) {
 }
 
 // funzione stampa fatturato by agent
-function printFatturatoByAgent(target, data) {
+function printFatturatoByAgent(template, data) {
   if(data) {
-    var ctx = target;
+    // handlebars context
+    var context = { chartType: "fatturato_by_agent"};
+    var html = template(context);
+    // inserisco il template in pagina
+    $('.container').append(html);
+
+    // chartjs
+    var ctx = $('#fatturato_by_agent');
     var myChart = new Chart(ctx, {
       type: data.type,
       data: {
@@ -62,8 +76,15 @@ function printFatturatoByAgent(target, data) {
 }
 
 // funzione stampa grafico team efficiency
-function printTeamEfficiency(target, data) {
+function printTeamEfficiency(template, data) {
   if(data) {
+    // handlebars context
+    var context = { chartType: "team-efficiency"};
+    var html = template(context);
+    // inserisco il template in pagina
+    $('.container').append(html);
+
+    // chartjs
     // seleziono i 3 team
     var team1 = data.teams[0];
     var team2 = data.teams[1];
@@ -83,7 +104,7 @@ function printTeamEfficiency(target, data) {
     team3.pointBorderWidth = 2;
 
     // stampo dati
-    var ctx = target;
+    var ctx = $('#team-efficiency');
     var myChart = new Chart(ctx, {
       type: data.type,
       data: {
@@ -133,6 +154,10 @@ function init() {
   var pieCanvas = $('#pieChart');
   var teamCanvas = $('#teamChart');
   var userLevel = getLevel();
+  // init handlebars
+  var source = $("#canvas-template").html();
+  var template = Handlebars.compile(source);
+
 
   // chiamata ajax unica
   $.ajax({
@@ -149,9 +174,9 @@ function init() {
         data.teamEfficiency.labels = mesi;
       }
 
-      printFatturato(lineCanvas, data.fatturato);
-      printFatturatoByAgent(pieCanvas, data.fatturatoByAgent);
-      printTeamEfficiency(teamCanvas, data.teamEfficiency);
+      printFatturato(template, data.fatturato);
+      printFatturatoByAgent(template, data.fatturatoByAgent);
+      printTeamEfficiency(template, data.teamEfficiency);
     },
     error: function(err, data, stato) {
       console.error("ERRORE", err.status);
