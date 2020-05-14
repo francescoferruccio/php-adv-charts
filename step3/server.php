@@ -1,8 +1,7 @@
 <?php
   header('Content-Type: application/json');
 
-  require_once "database.php";
-
+  // FUNZIONI-------------------------------------------------------------------
   function getFatturatoByAgent($db) {
     $fba['type'] = $db['fatturato_by_agent']['type'];
 
@@ -30,6 +29,9 @@
 
     return $tme;
   }
+
+  // CODICE---------------------------------------------------------------------
+  require_once "database.php";
 
   $level = $_GET['level'] ?? 'guest';
 
