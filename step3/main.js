@@ -122,8 +122,9 @@ function getMonths() {
 
 // funzione che ricava il livello utente dall'url
 function getLevel() {
-  var queryString = location.search;
-  var level = queryString.substring(7);
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var level = url.searchParams.get("level");
 
   return level;
 }
